@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Srinivasan2005oct/my-react-app.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('my-react-app') {
+                    bat 'npm install'
+                }
+            }
+        }
+
+        stage('Build React App') {
+            steps {
+                dir('my-react-app') {
+                    bat 'npm run build'
+                }
+            }
+        }
+
+        stage('Post-Build') {
+            steps {
+                echo ' Build completed successfully!'
+            }
+        }
+    }
+}

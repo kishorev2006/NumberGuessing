@@ -1,0 +1,55 @@
+import React, { useState } from "react";
+
+function App() {
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    let errs = {};
+    if (!form.name.trim()) errs.name = "Name is required";
+    if (!form.email.includes("@")) errs.email = "Invalid email";
+    if (form.password.length < 6) errs.password = "Password must be at least 6 chars";
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) alert("Form submitted successfully!");
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Form Validation Example</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Name"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        <p style={{ color: "red" }}>{errors.name}</p>
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        <p style={{ color: "red" }}>{errors.email}</p>
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
+        <p style={{ color: "red" }}>{errors.password}</p>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
